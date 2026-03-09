@@ -1,13 +1,14 @@
-const categories = document.querySelectorAll("#categories .item");
-console.log(`У списку ${categories.length} категорії.`);
+// Завдання 1
+const categoriesItems = document.querySelectorAll("#categories .item");
+console.log(`У списку ${categoriesItems.length} категорії.`);
 
-categories.forEach((category) => {
-  const title = category.querySelector("h2").textContent;
-  const count = category.querySelectorAll("ul li").length;
-  console.log(`Категорія: ${title}`);
-  console.log(`Кількість елементів: ${count}`);
+categoriesItems.forEach((item) => {
+  const title = item.querySelector("h2").textContent;
+  const count = item.querySelectorAll("li").length;
+  console.log(`Категорія: ${title}\nКількість елементів: ${count}`);
 });
 
+// Завдання 2
 const ingredients = [
   "Картопля",
   "Гриби",
@@ -18,60 +19,54 @@ const ingredients = [
 ];
 const ingredientsList = document.querySelector("#ingredients");
 
-const ingredientElements = ingredients.map((name) => {
+const elements = ingredients.map((name) => {
   const li = document.createElement("li");
   li.textContent = name;
-  li.classList.add("item");
   return li;
 });
+ingredientsList.append(...elements);
 
-ingredientsList.append(...ingredientElements);
-
+// Завдання 3
 const images = [
   {
-    url: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=1200",
-    alt: "Пухнастий сірий кіт",
+    url: "https://images.pexels.com/photos/140134/pexels-photo-140134.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    alt: "White and Black Long Fur Cat",
   },
   {
-    url: "https://images.unsplash.com/photo-1522818619623-e18985c57170?auto=format&fit=crop&w=1200",
-    alt: "Золоті рибки в акваріумі",
+    url: "https://images.pexels.com/photos/213399/pexels-photo-213399.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    alt: "Orange and White Koi Fish Near Yellow Koi Fish",
   },
   {
-    url: "https://images.unsplash.com/photo-1534067161351-7f98f647c5d0?auto=format&fit=crop&w=1200",
-    alt: "Табун коней у полі",
+    url: "https://images.pexels.com/photos/219943/pexels-photo-219943.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    alt: "Group of Horses Running",
   },
 ];
 
 const gallery = document.querySelector("#gallery");
-gallery.classList.add("gallery-list");
+gallery.classList.add("gallery");
 
 const markup = images
-  .map(
-    ({ url, alt }) =>
-      `<li class="gallery-item"><img src="${url}" alt="${alt}" width="300"></li>`,
-  )
+  .map(({ url, alt }) => `<li><img src="${url}" alt="${alt}"></li>`)
   .join("");
-
 gallery.insertAdjacentHTML("afterbegin", markup);
 
+// Завдання 4
 let counterValue = 0;
 const valueRef = document.querySelector("#value");
-const decrementBtn = document.querySelector('[data-action="decrement"]');
-const incrementBtn = document.querySelector('[data-action="increment"]');
+const decrBtn = document.querySelector('[data-action="decrement"]');
+const incrBtn = document.querySelector('[data-action="increment"]');
 
-const updateInterface = () => {
-  valueRef.textContent = counterValue;
-};
+const update = () => (valueRef.textContent = counterValue);
 
 const increment = () => {
   counterValue += 1;
-  updateInterface();
+  update();
 };
 
 const decrement = () => {
   counterValue -= 1;
-  updateInterface();
+  update();
 };
 
-incrementBtn.addEventListener("click", increment);
-decrementBtn.addEventListener("click", decrement);
+incrBtn.addEventListener("click", increment);
+decrBtn.addEventListener("click", decrement);
