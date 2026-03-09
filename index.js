@@ -1,12 +1,11 @@
-const categoriesList = document.querySelectorAll("#categories .item");
+const categories = document.querySelectorAll("#categories .item");
+console.log(`У списку ${categories.length} категорії.`);
 
-console.log(`У списку ${categoriesList.length} категорії.`);
-
-categoriesList.forEach((category) => {
+categories.forEach((category) => {
   const title = category.querySelector("h2").textContent;
-  const itemCount = category.querySelectorAll("ul li").length;
+  const count = category.querySelectorAll("ul li").length;
   console.log(`Категорія: ${title}`);
-  console.log(`Кількість елементів: ${itemCount}`);
+  console.log(`Кількість елементів: ${count}`);
 });
 
 const ingredients = [
@@ -17,59 +16,62 @@ const ingredients = [
   "Зелень",
   "Приправи",
 ];
+const ingredientsList = document.querySelector("#ingredients");
 
-const ingredientsContainer = document.querySelector("#ingredients");
-
-const ingredientElements = ingredients.map((ingredient) => {
+const ingredientElements = ingredients.map((name) => {
   const li = document.createElement("li");
-  li.textContent = ingredient;
+  li.textContent = name;
+  li.classList.add("item");
   return li;
 });
 
-ingredientsContainer.append(...ingredientElements);
+ingredientsList.append(...ingredientElements);
 
 const images = [
   {
-    url: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1260&auto=format&fit=crop",
-    alt: "Пухнастий сірий кіт дивиться в кадр",
+    url: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=1200",
+    alt: "Пухнастий сірий кіт",
   },
   {
-    url: "https://images.unsplash.com/photo-1522818619623-e18985c57170?q=80&w=1260&auto=format&fit=crop",
-    alt: "Дві золоті рибки в акваріумі",
+    url: "https://images.unsplash.com/photo-1522818619623-e18985c57170?auto=format&fit=crop&w=1200",
+    alt: "Золоті рибки в акваріумі",
   },
   {
-    url: "https://images.unsplash.com/photo-1534067161351-7f98f647c5d0?q=80&w=1260&auto=format&fit=crop",
-    alt: "Табун диких коней біжить по полю",
+    url: "https://images.unsplash.com/photo-1534067161351-7f98f647c5d0?auto=format&fit=crop&w=1200",
+    alt: "Табун коней у полі",
   },
 ];
 
-const galleryContainer = document.querySelector("#gallery");
+const gallery = document.querySelector("#gallery");
+gallery.classList.add("gallery-list");
 
-const galleryMarkup = images
+const markup = images
   .map(
     ({ url, alt }) =>
-      `<li><img src="${url}" alt="${alt}" width="300" height="200" style="object-fit: cover;"></li>`,
+      `<li class="gallery-item"><img src="${url}" alt="${alt}" width="300"></li>`,
   )
   .join("");
 
-galleryContainer.insertAdjacentHTML("afterbegin", galleryMarkup);
+gallery.insertAdjacentHTML("afterbegin", markup);
 
 let counterValue = 0;
-
-const valueDisplay = document.querySelector("#value");
+const valueRef = document.querySelector("#value");
 const decrementBtn = document.querySelector('[data-action="decrement"]');
 const incrementBtn = document.querySelector('[data-action="increment"]');
 
-const updateDisplay = () => {
-  valueDisplay.textContent = counterValue;
+const updateInterface = () => {
+  valueRef.textContent = counterValue;
 };
 
-decrementBtn.addEventListener("click", () => {
-  counterValue -= 1;
-  updateDisplay();
-});
-
-incrementBtn.addEventListener("click", () => {
+const increment = () => {
   counterValue += 1;
-  updateDisplay();
-});
+  updateInterface();
+};
+
+const decrement = () => {
+  counterValue -= 1;
+  updateInterface();
+};
+
+incrementBtn.addEventListener("click", increment);
+decrementBtn.addEventListener("click", decrement);
